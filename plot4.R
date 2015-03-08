@@ -1,0 +1,13 @@
+d <- read.csv(file="household_power_consumption.txt", header=TRUE, sep=";",stringsAsFactors=FALSE,na.strings="?")
+d_limited=d[(d$Date=="1/2/2007"|d$Date=="2/2/2007"),]
+d_limited$CombinedDtTime=strptime(paste(d_limited$Date,d_limited$Time),"%d/%m/%Y %H:%M:%S")
+par(mfrow=c(2,2))
+plot(d_limited$CombinedDtTime,d_limited$Global_active_power,type = "l",ylab="Global Active Power(kilowatts)",xlab="")
+plot(d_limited$CombinedDtTime,d_limited$Voltage,type = "l",ylab="Voltage",xlab="datetime")
+plot(d_limited$CombinedDtTime,d_limited$Sub_metering_1,type="l",ylab="Global Active Power(kilowatts)",xlab="")
+lines(d_limited$CombinedDtTime,d_limited$Sub_metering_2,type="l",col="red")
+lines(d_limited$CombinedDtTime,d_limited$Sub_metering_3,type="l",col="blue")
+legend("topright",legend=c("Sub_metering_1","Sub_metering_2","Sub_metering_3"),lty=1, col=c('black', 'red', 'blue'),bty='n', cex=.5)
+plot(d_limited$CombinedDtTime,d_limited$Global_reactive_power,type = "l",ylab="Global_reactive_power",xlab="datetime")
+dev.copy(png,file="plot4.png",height=480,width=480)
+dev.off()
